@@ -1,4 +1,7 @@
-from tkiniter import*
+from tkinter import*
 
-window. tk()
-window.geo
+window = Tk()
+window.geometry('400x400')
+window.title('Testing')
+
+window.mainloop()
