@@ -19,6 +19,14 @@ Tasks_button = Button(options_top, text='Tasks', font =('Arial',13),
                      bd=0, fg= '#0097e8', activeforeground= '#0097e8')
 Tasks_button.place(x=125, y=0, width=125)
 
+TBC_button = Button(options_top, text='Unsure', font =('Arial',13),
+                     bd=0, fg= '#0097e8', activeforeground= '#0097e8')
+TBC_button.place(x=250, y=0, width=125)
+
+Settings_button = Button(options_top, text='Settings', font =('Arial',13),
+                     bd=0, fg= '#0097e8', activeforeground= '#0097e8')
+Settings_button.place(x=375, y=0, width=125)
+
 # left_frame = Frame(window, bg=blue)
 # left_frame.grid()
 
