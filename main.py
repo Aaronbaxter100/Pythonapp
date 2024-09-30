@@ -4,8 +4,14 @@ window = Tk()
 window.geometry('500x500')
 window.title('Testing')
 
+def hide_indicators():
+    Home_indicate.config(bg='light grey')
+    Tasks_indicate.config(bg='light grey')
+    TBC_indicate.config(bg='light grey')
+    Settings_indicate.config(bg='light grey')
 
 def indicate(lb):
+    hide_indicators()
     lb.config(bg='Blue')
 
 
