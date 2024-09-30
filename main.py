@@ -44,14 +44,19 @@ def hide_indicators():
     TBC_indicate.config(bg='light grey')
     Settings_indicate.config(bg='light grey')
 
+def delete_pages():
+    for frame in window.winfo_children():
+        frame.destroy()
+
 def indicate(lb, page):
     hide_indicators()
     lb.config(bg='Blue')
+    delete_pages()
     page()
 
 
 # Frames
-options_top = Frame(master=window, bg= 'light grey')
+options_top = Frame(window, bg= 'light grey')
 options_top.pack(pady=5)
 options_top.pack_propagate(False)
 options_top.configure(width=500, height= 55)
