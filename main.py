@@ -20,13 +20,13 @@ def task_page():
 
     task_frame.pack(pady=20)
 
-def TBC_page():
-    TBC_frame = Frame(window)
+def tbc_page():
+    tbc_frame = Frame(window)
 
-    lb = Label(TBC_frame,text='Unsure page\n\nPage: 3', font =('Bold', 30))
+    lb = Label(tbc_frame,text='Unsure page\n\nPage: 3', font =('Bold', 30))
     lb.pack()
 
-    TBC_frame.pack(pady=20)
+    tbc_frame.pack(pady=20)
 
 def settings_page():
     settings_frame = Frame(window)
@@ -44,14 +44,14 @@ def hide_indicators():
     TBC_indicate.config(bg='light grey')
     Settings_indicate.config(bg='light grey')
 
-def delete_pages():
-    for frame in window.winfo_children():
-        frame.destroy()
+#def delete_pages():
+#    for frame in window.winfo_children():
+#        frame.destroy()
 
 def indicate(lb, page):
     hide_indicators()
     lb.config(bg='Blue')
-    delete_pages()
+    #delete_pages()
     page()
 
 
