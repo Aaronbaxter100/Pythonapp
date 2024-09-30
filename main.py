@@ -4,15 +4,26 @@ window = Tk()
 window.geometry('500x500')
 window.title('Testing')
 
+def home_page():
+    home_frame = Frame(window)
+
+    lb = Label(home_frame,text='Home page\n\nPage: 1', font =('Bold', 30))
+    lb.pack()
+
+    home_frame.pack(pady=20)
+
+
+
 def hide_indicators():
     Home_indicate.config(bg='light grey')
     Tasks_indicate.config(bg='light grey')
     TBC_indicate.config(bg='light grey')
     Settings_indicate.config(bg='light grey')
 
-def indicate(lb):
+def indicate(lb, page):
     hide_indicators()
     lb.config(bg='Blue')
+    page()
 
 
 # Frames
@@ -24,7 +35,7 @@ options_top.configure(width=500, height= 55)
 # Buttons
 Home_button = Button(options_top, text='Home', font =('Arial',13),
                     bd=0, fg= '#0097e8', bg='light grey' ,activeforeground= 'grey',
-                    command=lambda: indicate(Home_indicate))
+                    command=lambda: indicate(Home_indicate, home_page()))
 
 Home_button.place(x=0, y=0, width=125)
 
