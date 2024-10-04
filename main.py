@@ -122,5 +122,8 @@ Settings_indicate.place(x=420, y=50, width=35, height=5)
 # label1 = Label(text = ('Testing welcome'), font = ('Arial', 30))
 # label1.pack()
 
+# Set the initial page to home
+indicate(Home_indicate, home_page)
+
 update_time()
 window.mainloop()
