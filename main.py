@@ -1,23 +1,50 @@
 from tkinter import *
+from tkinter import ttk
 import time
-
 
 window = Tk()
 window.geometry('500x500')
 window.title('Testing')
 
+def apply_theme(theme):
+    if theme == "Dark Mode":
+        window.config(bg='black')
+        main_frame.config(bg='black')
+        options_top.config(bg='black')
+        Home_button.config(bg='black', fg='white')
+        Tasks_button.config(bg='black', fg='white')
+        TBC_button.config(bg='black', fg='white')
+        Settings_button.config(bg='black', fg='white')
+        time_label.config(bg='black', fg='white')
+    else:
+        window.config(bg='light grey')
+        main_frame.config(bg='pink')
+        options_top.config(bg='light grey')
+        Home_button.config(bg='light grey', fg='#0097e8')
+        Tasks_button.config(bg='light grey', fg='#0097e8')
+        TBC_button.config(bg='light grey', fg='#0097e8')
+        Settings_button.config(bg='light grey', fg='#0097e8')
+        time_label.config(bg='light grey', fg='black')
+
 def home_page():
     home_frame = Frame(main_frame)
+    home_frame.pack(pady=20, anchor='w')
 
-    lb = Label(home_frame,text='Home page\n\nPage: 1', font =('Bold', 30))
-    lb.pack()
+    test1 = Button(home_frame, text = 'Testing One', font =('Bold,40'))
+    test1.grid(row = 2, column = 0, sticky='w')
+
+    test2 = Button(home_frame, text='Testing Two', font=('Bold,40'))
+    test2.grid(row=3, column=0, sticky='w')
+
+    active = Label(home_frame, text='Active Tasks', font=('Bold', 30), bg='pink')
+    active.grid(row=1, column=0, sticky='w')
 
     home_frame.pack(pady=20)
 
 def task_page():
     task_frame = Frame(main_frame)
 
-    lb = Label(task_frame,text='Task page\n\nPage: 2', font =('Bold', 30))
+    lb = Label(task_frame, text='Task page\n\nPage: 2', font=('Bold', 30))
     lb.pack()
 
     task_frame.pack(pady=20)
@@ -25,7 +52,7 @@ def task_page():
 def tbc_page():
     tbc_frame = Frame(main_frame)
 
-    lb = Label(tbc_frame,text='Unsure page\n\nPage: 3', font =('Bold', 30))
+    lb = Label(tbc_frame, text='Unsure page\n\nPage: 3', font=('Bold', 30))
     lb.pack()
 
     tbc_frame.pack(pady=20)
@@ -33,12 +60,21 @@ def tbc_page():
 def settings_page():
     settings_frame = Frame(main_frame)
 
-    lb = Label(settings_frame,text='settings page\n\nPage: 4', font =('Bold', 30))
+    lb = Label(settings_frame, text='Settings Page\n\nPage: 4', font=('Bold', 30))
     lb.pack()
 
+    theme_options = ['Light Mode', 'Dark Mode']
+    theme_dropdown = ttk.Combobox(settings_frame, values=theme_options, state='readonly')
+    theme_dropdown.set('Light Mode')  # Default theme
+    theme_dropdown.pack(pady=10)
+
+    def on_theme_change(event):
+        selected_theme = theme_dropdown.get()
+        apply_theme(selected_theme)
+
+    theme_dropdown.bind('<<ComboboxSelected>>', on_theme_change)
+
     settings_frame.pack(pady=20)
-
-
 
 def hide_indicators():
     Home_indicate.config(bg='light grey')
@@ -46,11 +82,9 @@ def hide_indicators():
     TBC_indicate.config(bg='light grey')
     Settings_indicate.config(bg='light grey')
 
-
 def delete_pages():
     for frame in main_frame.winfo_children():  # Only delete children of main_frame
         frame.destroy()
-
 
 def indicate(lb, page):
     hide_indicators()
@@ -63,66 +97,55 @@ def update_time():
     time_label.config(text=current_time)         # Update label with current time
     window.after(1000, update_time)
 
-
 # Frames
-options_top = Frame(window, bg= 'light grey')
+options_top = Frame(window, bg='light grey')
 options_top.pack(pady=5)
 options_top.pack_propagate(False)
-options_top.configure(width=500, height= 55)
+options_top.configure(width=500, height=55)
 
-main_frame = Frame(window,bg = 'pink')
+main_frame = Frame(window, bg='pink')
 main_frame.pack(pady=5)
 main_frame.pack_propagate(False)
-main_frame.configure(width=500, height= 700)
+main_frame.configure(width=500, height=700)
 
 # Labels
-time_label = Label(options_top, text="", font=('Arial', 12), bg='light grey')
-time_label.place(x=390, y=0)
-# Buttons
-Home_button = Button(options_top, text='Home', font =('Arial',13),
-                    bd=0, fg= '#0097e8', bg='light grey' ,activeforeground= 'grey',
-                    command=lambda: indicate(Home_indicate, home_page))
+time_label = Label(options_top, text="", font=('Arial', 8), bg='light grey')
+time_label.place(x=420, y=0)
 
+# Buttons
+Home_button = Button(options_top, text='Home', font=('Arial', 13),
+                     bd=0, fg='#0097e8', bg='light grey', activeforeground='grey',
+                     command=lambda: indicate(Home_indicate, home_page))
 Home_button.place(x=0, y=20, width=125)
 
 Home_indicate = Label(options_top, text="", bg='light grey')
 Home_indicate.place(x=45, y=50, width=35, height=5)
 
-Tasks_button = Button(options_top, text='Tasks', font =('Arial',13),
-                     bd=0, fg= '#0097e8',bg='light grey', activeforeground= 'grey',
-                    command=lambda: indicate(Tasks_indicate,task_page))
-
+Tasks_button = Button(options_top, text='Tasks', font=('Arial', 13),
+                      bd=0, fg='#0097e8', bg='light grey', activeforeground='grey',
+                      command=lambda: indicate(Tasks_indicate, task_page))
 Tasks_button.place(x=125, y=20, width=125)
 
 Tasks_indicate = Label(options_top, text="", bg='light grey')
 Tasks_indicate.place(x=170, y=50, width=35, height=5)
 
-TBC_button = Button(options_top, text='Unsure', font =('Arial',13),
-                    bd=0, fg= '#0097e8', bg='light grey', activeforeground= 'grey',
+TBC_button = Button(options_top, text='Unsure', font=('Arial', 13),
+                    bd=0, fg='#0097e8', bg='light grey', activeforeground='grey',
                     command=lambda: indicate(TBC_indicate, tbc_page))
-
 TBC_button.place(x=250, y=20, width=125)
 
 TBC_indicate = Label(options_top, text="", bg='light grey')
 TBC_indicate.place(x=297, y=50, width=35, height=5)
 
-Settings_button = Button(options_top, text='Settings', font =('Arial',13),
-                    bd=0, fg= '#0097e8',bg='light grey', activeforeground= 'grey',
-                    command=lambda: indicate(Settings_indicate, settings_page))
-
+Settings_button = Button(options_top, text='Settings', font=('Arial', 13),
+                         bd=0, fg='#0097e8', bg='light grey', activeforeground='grey',
+                         command=lambda: indicate(Settings_indicate, settings_page))
 Settings_button.place(x=375, y=20, width=125)
 
-Settings_indicate = Label (options_top, text="", bg='light grey')
+Settings_indicate = Label(options_top, text="", bg='light grey')
 Settings_indicate.place(x=420, y=50, width=35, height=5)
 
-# left_frame = Frame(window, bg=blue)
-# left_frame.grid()
 
-# Labels
-# label1 = Label(text = ('Testing welcome'), font = ('Arial', 30))
-# label1.pack()
-
-# Set the initial page to home
 indicate(Home_indicate, home_page)
 
 update_time()
