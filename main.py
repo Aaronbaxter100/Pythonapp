@@ -1,10 +1,7 @@
-from os.path import commonpath
 from tkinter import *
 from tkinter import ttk
 import time
-from tkinter import Toplevel
-
-from PyInstaller.lib.modulegraph.modulegraph import entry
+from tkinter import Toplevel, Text, StringVar, END
 
 window = Tk()
 window.geometry('500x500')
@@ -118,22 +115,35 @@ def update_time():
     window.after(1000, update_time)
 
 def help():
-    help_window = Toplevel(window)  # Toplevel creates a new window
+    help_window = Toplevel(window)
     help_window.title('Help')
     help_window.geometry('400x400')
     help_window.resizable(width=False, height=False)
 
     help_label = Label(help_window, text="This is the Help section.", font=('Arial', 15))
-    help_label.pack(pady=20)
+    help_label.pack(pady=5)
 
-    message_var = StringVar()
+    info_label = Label(help_window, text="Please tell us how we can help? ", font=('Arial', 15))
+    info_label.pack(pady=5)
 
-    message_entry = Entry(help_window, textvariable=message_var, font=('Arial', 12), width=30)
-    message_entry.pack(pady=10)
+    message_text = Text(help_window, font=('Arial', 12), height=5, width=40)
+    message_text.pack(pady=10)
+
+    def limit_chars(event=None):
+        current_text = message_text.get("1.0", END)
+        if len(current_text) > 200:
+            message_text.delete("1.0", END)
+            message_text.insert("1.0", current_text[:200])
+
+    message_text.bind("<KeyRelease>", limit_chars)
 
     def submit_message():
-        message = message_var.get()
-        print(f"Submitted message: {message}")
+        message = message_text.get("1.0", END).strip()
+        if len(message) > 200:
+            print("Error: Message exceeds 20 characters!")
+        else:
+            print(f"Submitted message: {message}")
+            message_text.delete("1.0", END)
 
     submit_button = Button(help_window, text="Submit", font=('Arial', 12), command=submit_message)
     submit_button.pack(pady=10)
