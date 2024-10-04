@@ -76,6 +76,7 @@ def settings_page():
 
     settings_frame.pack(pady=20)
 
+
 def hide_indicators():
     Home_indicate.config(bg='light grey')
     Tasks_indicate.config(bg='light grey')
