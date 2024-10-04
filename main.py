@@ -145,7 +145,6 @@ Settings_button.place(x=375, y=20, width=125)
 Settings_indicate = Label(options_top, text="", bg='light grey')
 Settings_indicate.place(x=420, y=50, width=35, height=5)
 
-
 indicate(Home_indicate, home_page)
 
 update_time()
