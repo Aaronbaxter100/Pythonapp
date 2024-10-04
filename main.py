@@ -44,15 +44,16 @@ def home_page():
 def task_page():
     task_frame = Frame(main_frame)
 
-    lb = Label(task_frame, text='Task page\n\nPage: 2', font=('Bold', 30))
+    lb = Label(task_frame, text='Task page\n\nPage: 2', font=('Bold', 30), bg = 'pink')
     lb.pack()
 
-    task_frame.pack(pady=20)
+    task_frame.pack()
+
 
 def tbc_page():
     tbc_frame = Frame(main_frame)
 
-    lb = Label(tbc_frame, text='Unsure page\n\nPage: 3', font=('Bold', 30))
+    lb = Label(tbc_frame, text='TBC\n\nPage: 3', font=('Bold', 30),bg = 'pink')
     lb.pack()
 
     tbc_frame.pack(pady=20)
@@ -64,7 +65,7 @@ def settings_page():
     lb.pack()
 
     theme_options = ['Light Mode', 'Dark Mode']
-    theme_dropdown = ttk.Combobox(settings_frame, values=theme_options, state='readonly')
+    theme_dropdown = ttk.Combobox(settings_frame, values=theme_options, state='readonly', )
     theme_dropdown.set('Light Mode')  # Default theme
     theme_dropdown.pack(pady=10)
 
@@ -84,7 +85,7 @@ def hide_indicators():
     Settings_indicate.config(bg='light grey')
 
 def delete_pages():
-    for frame in main_frame.winfo_children():  # Only delete children of main_frame
+    for frame in main_frame.winfo_children():
         frame.destroy()
 
 def indicate(lb, page):
@@ -130,7 +131,7 @@ Tasks_button.place(x=125, y=20, width=125)
 Tasks_indicate = Label(options_top, text="", bg='light grey')
 Tasks_indicate.place(x=170, y=50, width=35, height=5)
 
-TBC_button = Button(options_top, text='Unsure', font=('Arial', 13),
+TBC_button = Button(options_top, text='TBC', font=('Arial', 13),
                     bd=0, fg='#0097e8', bg='light grey', activeforeground='grey',
                     command=lambda: indicate(TBC_indicate, tbc_page))
 TBC_button.place(x=250, y=20, width=125)
