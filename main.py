@@ -41,28 +41,28 @@ def home_page():
     home_frame.pack(pady=20)
 
 def task_page():
-    task_frame = Frame(main_frame)
+    task_frame = Frame(main_frame, bg = 'Light grey')
 
-    lb = Label(task_frame, text='Task page\n\nPage: 2', font=('Bold', 30), bg = 'pink')
+    lb = Label(task_frame, text='Task page\n\nPage: 2', font=('Bold', 30), bg = 'Light grey')
     lb.pack()
 
     task_frame.pack()
 
 def tbc_page():
-    tbc_frame = Frame(main_frame)
+    tbc_frame = Frame(main_frame, bg = 'Light grey')
 
-    lb = Label(tbc_frame, text='TBC\n\nPage: 3', font=('Bold', 30),bg = 'pink')
+    lb = Label(tbc_frame, text='TBC\n\nPage: 3', font=('Bold', 30),bg = 'Light grey')
     lb.pack()
 
     tbc_frame.pack(pady=20)
 
 def settings_page():
 
-    settings_frame = Frame(main_frame)
+    settings_frame = Frame(main_frame, bg = 'Light grey')
     settings_frame.pack(fill='both', expand=True)
 
-    button_frame = Frame(settings_frame)
-    button_frame.pack(side='left', fill='y', padx=10, pady=10)
+    button_frame = Frame(settings_frame, bg = 'grey')
+    button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
     button1 = Button(button_frame, text='Button 1', font = ('bold', 10))
     button1.pack(pady=5)
@@ -78,8 +78,7 @@ def settings_page():
     theme_dropdown.set('Light Mode')
     theme_dropdown.pack(pady=10)
 
-
-    lb = Label(settings_frame, text='Settings Page\n\nPage: 4', font=('Bold', 30), bg='pink')
+    lb = Label(settings_frame, text='Settings Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='Light grey')
     lb.pack(pady=10)
 
     def on_theme_change(event):
@@ -151,7 +150,7 @@ options_top.pack(pady=5)
 options_top.pack_propagate(False)
 options_top.configure(width=500, height=55)
 
-main_frame = Frame(window, bg='pink')
+main_frame = Frame(window, bg='Light grey')
 main_frame.pack(pady=5)
 main_frame.pack_propagate(False)
 main_frame.configure(width=500, height=700)
