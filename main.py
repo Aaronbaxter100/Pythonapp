@@ -59,15 +59,32 @@ def tbc_page():
     tbc_frame.pack(pady=20)
 
 def settings_page():
-    settings_frame = Frame(main_frame)
 
-    lb = Label(settings_frame, text='Settings Page\n\nPage: 4', font=('Bold', 30),bg = 'pink')
-    lb.pack()
+    settings_frame = Frame(main_frame)
+    settings_frame.pack(fill='both', expand=True)  # Fill the available space
+
+
+    button_frame = Frame(settings_frame)
+    button_frame.pack(side='left', fill='y', padx=10, pady=10)  # Pack on the left
+
+
+    button1 = Button(button_frame, text='Button 1')
+    button1.pack(pady=5)
+
+    button2 = Button(button_frame, text='Button 2')
+    button2.pack(pady=5)
+
+    button3 = Button(button_frame, text='Button 3')
+    button3.pack(pady=5)
 
     theme_options = ['Light Mode', 'Dark Mode']
-    theme_dropdown = ttk.Combobox(settings_frame, values=theme_options, state='readonly', )
-    theme_dropdown.set('Light Mode')  # Default theme
+    theme_dropdown = ttk.Combobox(button_frame, values=theme_options, state='readonly')
+    theme_dropdown.set('Light Mode')
     theme_dropdown.pack(pady=10)
+
+
+    lb = Label(settings_frame, text='Settings Page\n\nPage: 4', font=('Bold', 30), bg='pink')
+    lb.pack(pady=10)
 
     def on_theme_change(event):
         selected_theme = theme_dropdown.get()
