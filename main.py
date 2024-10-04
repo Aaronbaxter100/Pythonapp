@@ -11,22 +11,24 @@ window.resizable(width=False, height=False)
 def apply_theme(theme):
     if theme == "Dark Mode":
         window.config(bg='#36454F')
-        main_frame.config(bg='#36454F')
+        main_frame.config(bg='light grey')
         options_top.config(bg='#36454F')
         Home_button.config(bg='#36454F', fg='white')
         Tasks_button.config(bg='#36454F', fg='white')
         TBC_button.config(bg='#36454F', fg='white')
         Settings_button.config(bg='#36454F', fg='white')
         time_label.config(bg='#36454F', fg='white')
+        welcome_label.config(bg='#36454F', fg='white')
     else:
-        window.config(bg='light grey')
-        main_frame.config(bg='pink')
-        options_top.config(bg='light grey')
-        Home_button.config(bg='light grey', fg='#0097e8')
-        Tasks_button.config(bg='light grey', fg='#0097e8')
-        TBC_button.config(bg='light grey', fg='#0097e8')
-        Settings_button.config(bg='light grey', fg='#0097e8')
-        time_label.config(bg='light grey', fg='black')
+        window.config(bg='#abb2b9')
+        main_frame.config(bg='#abb2b9')
+        options_top.config(bg='#abb2b9')
+        Home_button.config(bg='#abb2b9', fg='#0097e8')
+        Tasks_button.config(bg='#abb2b9', fg='#0097e8')
+        TBC_button.config(bg='#abb2b9', fg='#0097e8')
+        Settings_button.config(bg='#abb2b9', fg='#0097e8')
+        time_label.config(bg='#abb2b9', fg='black')
+        welcome_label.config(bg='#abb2b9', fg='black')
 
 def home_page():
     home_frame = Frame(main_frame)
@@ -61,7 +63,7 @@ def settings_page():
     settings_frame = Frame(main_frame, bg = 'Light grey')
     settings_frame.pack(fill='both', expand=True)
 
-    button_frame = Frame(settings_frame, bg = 'grey')
+    button_frame = Frame(settings_frame, bg = '#abb2b9')
     button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
     button1 = Button(button_frame, text='Button 1', font = ('bold', 10))
@@ -74,11 +76,11 @@ def settings_page():
     help_button.pack(pady=5)
 
     theme_options = ['Light Mode', 'Dark Mode']
-    theme_dropdown = ttk.Combobox(button_frame, values=theme_options, state='readonly')
+    theme_dropdown = ttk.Combobox(button_frame, values=theme_options, state='readonly', width = 12)
     theme_dropdown.set('Light Mode')
     theme_dropdown.pack(pady=10)
 
-    lb = Label(settings_frame, text='Settings Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='Light grey')
+    lb = Label(settings_frame, text='Settings Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='light grey')
     lb.pack(pady=10)
 
     def on_theme_change(event):
