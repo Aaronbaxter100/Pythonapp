@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import time
-from tkinter import Toplevel, Text, StringVar, END
+from tkinter import Toplevel, Text, END
 
 window = Tk()
 window.geometry('500x500')
@@ -32,14 +32,11 @@ def home_page():
     home_frame = Frame(main_frame)
     home_frame.pack(pady=20, anchor='w')
 
-    test1 = Button(home_frame, text = 'Testing One', font =('Bold,40'))
+    test1 = Button(home_frame, text = 'Testing One', font = 'Bold,40')
     test1.grid(row = 2, column = 0, sticky='w')
 
-    test2 = Button(home_frame, text='Testing Two', font=('Bold,40'),)
+    test2 = Button(home_frame, text='Testing Two', font = 'Bold,40',)
     test2.grid(row=3, column=0, sticky='w')
-
-    #active = Label(home_frame, text='Active Tasks', font=('Bold', 30), bg='pink')
-    #active.grid(row=1, column=0, sticky='w')
 
     home_frame.pack(pady=20)
 
@@ -67,13 +64,13 @@ def settings_page():
     button_frame = Frame(settings_frame)
     button_frame.pack(side='left', fill='y', padx=10, pady=10)
 
-    button1 = Button(button_frame, text='Button 1')
+    button1 = Button(button_frame, text='Button 1', font = ('bold', 10))
     button1.pack(pady=5)
 
-    button2 = Button(button_frame, text='Button 2')
+    button2 = Button(button_frame, text='Button 2', font = ('bold', 10))
     button2.pack(pady=5)
 
-    help_button = Button(button_frame, text='Help', command=help)
+    help_button = Button(button_frame, text='    Help    ', font = ('bold', 10), command=help)
     help_button.pack(pady=5)
 
     theme_options = ['Light Mode', 'Dark Mode']
@@ -160,7 +157,10 @@ main_frame.pack_propagate(False)
 main_frame.configure(width=500, height=700)
 
 # Labels
-time_label = Label(options_top, text="", font=('Arial', 8), bg='light grey')
+welcome_label = Label(options_top, text="Welcome", font=('Bold', 12), fg = 'Black',bg='light grey')
+welcome_label.place(x=200, y=0)
+
+time_label = Label(options_top, text="", font=('Bold', 7), fg = 'Black',bg='light grey')
 time_label.place(x=420, y=0)
 
 # Buttons
