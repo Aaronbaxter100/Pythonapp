@@ -8,14 +8,14 @@ window.title('Testing')
 
 def apply_theme(theme):
     if theme == "Dark Mode":
-        window.config(bg='black')
-        main_frame.config(bg='black')
-        options_top.config(bg='black')
-        Home_button.config(bg='black', fg='white')
-        Tasks_button.config(bg='black', fg='white')
-        TBC_button.config(bg='black', fg='white')
-        Settings_button.config(bg='black', fg='white')
-        time_label.config(bg='black', fg='white')
+        window.config(bg='#36454F')
+        main_frame.config(bg='#36454F')
+        options_top.config(bg='#36454F')
+        Home_button.config(bg='#36454F', fg='white')
+        Tasks_button.config(bg='#36454F', fg='white')
+        TBC_button.config(bg='#36454F', fg='white')
+        Settings_button.config(bg='#36454F', fg='white')
+        time_label.config(bg='#36454F', fg='white')
     else:
         window.config(bg='light grey')
         main_frame.config(bg='pink')
@@ -33,11 +33,11 @@ def home_page():
     test1 = Button(home_frame, text = 'Testing One', font =('Bold,40'))
     test1.grid(row = 2, column = 0, sticky='w')
 
-    test2 = Button(home_frame, text='Testing Two', font=('Bold,40'))
+    test2 = Button(home_frame, text='Testing Two', font=('Bold,40'),)
     test2.grid(row=3, column=0, sticky='w')
 
-    active = Label(home_frame, text='Active Tasks', font=('Bold', 30), bg='pink')
-    active.grid(row=1, column=0, sticky='w')
+    #active = Label(home_frame, text='Active Tasks', font=('Bold', 30), bg='pink')
+    #active.grid(row=1, column=0, sticky='w')
 
     home_frame.pack(pady=20)
 
@@ -60,7 +60,7 @@ def tbc_page():
 def settings_page():
     settings_frame = Frame(main_frame)
 
-    lb = Label(settings_frame, text='Settings Page\n\nPage: 4', font=('Bold', 30))
+    lb = Label(settings_frame, text='Settings Page\n\nPage: 4', font=('Bold', 30),bg = 'pink')
     lb.pack()
 
     theme_options = ['Light Mode', 'Dark Mode']
