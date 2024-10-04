@@ -2,6 +2,9 @@ from os.path import commonpath
 from tkinter import *
 from tkinter import ttk
 import time
+from tkinter import Toplevel
+
+from PyInstaller.lib.modulegraph.modulegraph import entry
 
 window = Tk()
 window.geometry('500x500')
@@ -51,7 +54,6 @@ def task_page():
 
     task_frame.pack()
 
-
 def tbc_page():
     tbc_frame = Frame(main_frame)
 
@@ -65,10 +67,8 @@ def settings_page():
     settings_frame = Frame(main_frame)
     settings_frame.pack(fill='both', expand=True)
 
-
     button_frame = Frame(settings_frame)
     button_frame.pack(side='left', fill='y', padx=10, pady=10)
-
 
     button1 = Button(button_frame, text='Button 1')
     button1.pack(pady=5)
@@ -76,8 +76,8 @@ def settings_page():
     button2 = Button(button_frame, text='Button 2')
     button2.pack(pady=5)
 
-    help = Button(button_frame, text='Help')
-    help.pack(pady=5)
+    help_button = Button(button_frame, text='Help', command=help)
+    help_button.pack(pady=5)
 
     theme_options = ['Light Mode', 'Dark Mode']
     theme_dropdown = ttk.Combobox(button_frame, values=theme_options, state='readonly')
@@ -95,10 +95,6 @@ def settings_page():
     theme_dropdown.bind('<<ComboboxSelected>>', on_theme_change)
 
     settings_frame.pack(pady=20)
-
-def help()
-    commonpath()
-
 
 def hide_indicators():
     Home_indicate.config(bg='light grey')
@@ -120,6 +116,27 @@ def update_time():
     current_time = time.strftime('%H:%M:%S')
     time_label.config(text=current_time)
     window.after(1000, update_time)
+
+def help():
+    help_window = Toplevel(window)  # Toplevel creates a new window
+    help_window.title('Help')
+    help_window.geometry('400x400')
+    help_window.resizable(width=False, height=False)
+
+    help_label = Label(help_window, text="This is the Help section.", font=('Arial', 15))
+    help_label.pack(pady=20)
+
+    message_var = StringVar()
+
+    message_entry = Entry(help_window, textvariable=message_var, font=('Arial', 12), width=30)
+    message_entry.pack(pady=10)
+
+    def submit_message():
+        message = message_var.get()
+        print(f"Submitted message: {message}")
+
+    submit_button = Button(help_window, text="Submit", font=('Arial', 12), command=submit_message)
+    submit_button.pack(pady=10)
 
 # Frames
 options_top = Frame(window, bg='light grey')
