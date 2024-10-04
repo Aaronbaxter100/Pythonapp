@@ -7,11 +7,12 @@ window = Tk()
 window.geometry('500x500')
 window.title('Testing')
 window.resizable(width=False, height=False)
+#window.config(bg='Light grey')
 
 def apply_theme(theme):
     if theme == "Dark Mode":
         window.config(bg='#36454F')
-        main_frame.config(bg='light grey')
+        main_frame.config(bg='Light grey')
         options_top.config(bg='#36454F')
         Home_button.config(bg='#36454F', fg='white')
         Tasks_button.config(bg='#36454F', fg='white')
@@ -20,15 +21,15 @@ def apply_theme(theme):
         time_label.config(bg='#36454F', fg='white')
         welcome_label.config(bg='#36454F', fg='white')
     else:
-        window.config(bg='#abb2b9')
-        main_frame.config(bg='#abb2b9')
-        options_top.config(bg='#abb2b9')
-        Home_button.config(bg='#abb2b9', fg='#0097e8')
-        Tasks_button.config(bg='#abb2b9', fg='#0097e8')
-        TBC_button.config(bg='#abb2b9', fg='#0097e8')
-        Settings_button.config(bg='#abb2b9', fg='#0097e8')
-        time_label.config(bg='#abb2b9', fg='black')
-        welcome_label.config(bg='#abb2b9', fg='black')
+        window.config(bg='White')
+        main_frame.config(bg='Light grey')
+        options_top.config(bg='Light grey')
+        Home_button.config(bg='Light grey', fg='#0097e8')
+        Tasks_button.config(bg='Light grey', fg='#0097e8')
+        TBC_button.config(bg='Light grey', fg='#0097e8')
+        Settings_button.config(bg='Light grey', fg='#0097e8')
+        time_label.config(bg='Light grey', fg='black')
+        welcome_label.config(bg='Light grey', fg='black')
 
 def home_page():
     home_frame = Frame(main_frame)
@@ -52,6 +53,12 @@ def task_page():
 
 def tbc_page():
     tbc_frame = Frame(main_frame, bg = 'Light grey')
+
+    tbc_button_frame = Frame(tbc_frame, bg='#abb2b9')
+    tbc_button_frame.pack(side='left', fill='y', padx=0, pady=0)
+
+    testing_button = Button(tbc_button_frame, text='Testing Button', font=('bold', 10))
+    testing_button.pack(pady=5)
 
     lb = Label(tbc_frame, text='TBC\n\nPage: 3', font=('Bold', 30),bg = 'Light grey')
     lb.pack()
@@ -80,7 +87,7 @@ def settings_page():
     theme_dropdown.set('Light Mode')
     theme_dropdown.pack(pady=10)
 
-    lb = Label(settings_frame, text='Settings Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='light grey')
+    lb = Label(settings_frame, text='Settings Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='Light grey')
     lb.pack(pady=10)
 
     def on_theme_change(event):
@@ -92,10 +99,10 @@ def settings_page():
     settings_frame.pack(pady=20)
 
 def hide_indicators():
-    Home_indicate.config(bg='light grey')
-    Tasks_indicate.config(bg='light grey')
-    TBC_indicate.config(bg='light grey')
-    Settings_indicate.config(bg='light grey')
+    Home_indicate.config(bg='Light grey')
+    Tasks_indicate.config(bg='Light grey')
+    TBC_indicate.config(bg='Light grey')
+    Settings_indicate.config(bg='Light grey')
 
 def delete_pages():
     for frame in main_frame.winfo_children():
@@ -147,10 +154,10 @@ def help():
     submit_button.pack(pady=10)
 
 # Frames
-options_top = Frame(window, bg='light grey')
+options_top = Frame(window, bg='Light grey')
 options_top.pack(pady=5)
 options_top.pack_propagate(False)
-options_top.configure(width=500, height=55)
+options_top.configure(width=500, height=80)
 
 main_frame = Frame(window, bg='Light grey')
 main_frame.pack(pady=5)
@@ -158,43 +165,43 @@ main_frame.pack_propagate(False)
 main_frame.configure(width=500, height=700)
 
 # Labels
-welcome_label = Label(options_top, text="Welcome", font=('Bold', 12), fg = 'Black',bg='light grey')
+welcome_label = Label(options_top, text="Welcome", font=('Bold', 12), fg = 'Black',bg='Light grey')
 welcome_label.place(x=200, y=0)
 
-time_label = Label(options_top, text="", font=('Bold', 7), fg = 'Black',bg='light grey')
+time_label = Label(options_top, text="", font=('Bold', 7), fg = 'Black',bg='Light grey')
 time_label.place(x=420, y=0)
 
 # Buttons
 Home_button = Button(options_top, text='Home', font=('Arial', 13),
-                     bd=0, fg='#0097e8', bg='light grey', activeforeground='grey',
+                     bd=0, fg='#0097e8', bg='Light grey', activeforeground='Light grey',
                      command=lambda: indicate(Home_indicate, home_page))
 Home_button.place(x=0, y=20, width=125)
 
-Home_indicate = Label(options_top, text="", bg='light grey')
+Home_indicate = Label(options_top, text="", bg='#abb2b9')
 Home_indicate.place(x=45, y=50, width=35, height=5)
 
 Tasks_button = Button(options_top, text='Tasks', font=('Arial', 13),
-                      bd=0, fg='#0097e8', bg='light grey', activeforeground='grey',
+                      bd=0, fg='#0097e8', bg='Light grey', activeforeground='Light grey',
                       command=lambda: indicate(Tasks_indicate, task_page))
 Tasks_button.place(x=125, y=20, width=125)
 
-Tasks_indicate = Label(options_top, text="", bg='light grey')
+Tasks_indicate = Label(options_top, text="", bg='Light grey')
 Tasks_indicate.place(x=170, y=50, width=35, height=5)
 
 TBC_button = Button(options_top, text='TBC', font=('Arial', 13),
-                    bd=0, fg='#0097e8', bg='light grey', activeforeground='grey',
+                    bd=0, fg='#0097e8', bg='Light grey', activeforeground='Light grey',
                     command=lambda: indicate(TBC_indicate, tbc_page))
 TBC_button.place(x=250, y=20, width=125)
 
-TBC_indicate = Label(options_top, text="", bg='light grey')
+TBC_indicate = Label(options_top, text="", bg='Light grey')
 TBC_indicate.place(x=297, y=50, width=35, height=5)
 
 Settings_button = Button(options_top, text='Settings', font=('Arial', 13),
-                         bd=0, fg='#0097e8', bg='light grey', activeforeground='grey',
+                         bd=0, fg='#0097e8', bg='Light grey', activeforeground='Light grey',
                          command=lambda: indicate(Settings_indicate, settings_page))
 Settings_button.place(x=375, y=20, width=125)
 
-Settings_indicate = Label(options_top, text="", bg='light grey')
+Settings_indicate = Label(options_top, text="", bg='Light grey')
 Settings_indicate.place(x=420, y=50, width=35, height=5)
 
 indicate(Home_indicate, home_page)
