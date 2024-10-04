@@ -1,3 +1,4 @@
+from os.path import commonpath
 from tkinter import *
 from tkinter import ttk
 import time
@@ -5,6 +6,7 @@ import time
 window = Tk()
 window.geometry('500x500')
 window.title('Testing')
+window.resizable(width=False, height=False)
 
 def apply_theme(theme):
     if theme == "Dark Mode":
@@ -61,11 +63,11 @@ def tbc_page():
 def settings_page():
 
     settings_frame = Frame(main_frame)
-    settings_frame.pack(fill='both', expand=True)  # Fill the available space
+    settings_frame.pack(fill='both', expand=True)
 
 
     button_frame = Frame(settings_frame)
-    button_frame.pack(side='left', fill='y', padx=10, pady=10)  # Pack on the left
+    button_frame.pack(side='left', fill='y', padx=10, pady=10)
 
 
     button1 = Button(button_frame, text='Button 1')
@@ -74,8 +76,8 @@ def settings_page():
     button2 = Button(button_frame, text='Button 2')
     button2.pack(pady=5)
 
-    button3 = Button(button_frame, text='Button 3')
-    button3.pack(pady=5)
+    help = Button(button_frame, text='Help')
+    help.pack(pady=5)
 
     theme_options = ['Light Mode', 'Dark Mode']
     theme_dropdown = ttk.Combobox(button_frame, values=theme_options, state='readonly')
@@ -93,6 +95,9 @@ def settings_page():
     theme_dropdown.bind('<<ComboboxSelected>>', on_theme_change)
 
     settings_frame.pack(pady=20)
+
+def help()
+    commonpath()
 
 
 def hide_indicators():
@@ -112,8 +117,8 @@ def indicate(lb, page):
     page()
 
 def update_time():
-    current_time = time.strftime('%H:%M:%S')  # Time format
-    time_label.config(text=current_time)         # Update label with current time
+    current_time = time.strftime('%H:%M:%S')
+    time_label.config(text=current_time)
     window.after(1000, update_time)
 
 # Frames
