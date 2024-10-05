@@ -102,11 +102,14 @@ def home_page():
     home_frame = Frame(main_frame)
     home_frame.pack(pady=20, anchor='w')
 
-    test1 = Button(home_frame, text='Testing One', font='Bold,40')
-    test1.grid(row=2, column=0, sticky='w')
+    button_frame = Frame(home_frame, bg='#abb2b9')
+    button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
-    test2 = Button(home_frame, text='Testing Two', font='Bold,40')
-    test2.grid(row=3, column=0, sticky='w')
+    test1 = ttk.Button(button_frame, text='Testing One')
+    test1.pack()
+
+    test2 = ttk.Button(button_frame, text='Testing Two',)
+    test2.pack()
 
     home_frame.pack(pady=20)
 
@@ -116,7 +119,7 @@ def task_page():
     lb.pack()
     task_frame.pack()
 
-    button_frame = Frame(settings_frame, bg='#abb2b9')
+    button_frame = Frame(task_frame, bg='#abb2b9')
     button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
 def tbc_page():
@@ -129,8 +132,7 @@ def tbc_page():
     lb = Label(tbc_frame, text='TBC\n\nPage: 3', font=('Bold', 30), bg='Light grey')
     lb.pack(pady=10)
 
-
-    button1 = Button(button_frame, text='Button 1', font=('bold', 10))
+    button1 = ttk.Button(button_frame, text='Button 1' )
     button1.pack(pady=5)
 
 def settings_page():
@@ -140,13 +142,13 @@ def settings_page():
     button_frame = Frame(settings_frame, bg='#abb2b9')
     button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
-    button1 = Button(button_frame, text='Button 1', font=('bold', 10))
+    button1 = ttk.Button(button_frame, text='Button 1')
     button1.pack(pady=5)
 
-    button2 = Button(button_frame, text='Button 2', font=('bold', 10))
+    button2 = ttk.Button(button_frame, text='Button 2')
     button2.pack(pady=5)
 
-    help_button = Button(button_frame, text='    Help    ', font=('bold', 10), command=help)
+    help_button = ttk.Button(button_frame, text='    Help    ', command=help)
     help_button.pack(pady=5)
 
     theme_options = ['Light Mode', 'Dark Mode']
@@ -218,10 +220,14 @@ def help():
     submit_button = Button(help_window, text="Submit", font=('Arial', 12), command=submit_message)
     submit_button.pack(pady=10)
 
+# Frame
 login_frame = Frame(window)
 login_frame.pack(fill='both', expand=True)
 
-login_label = Label(login_frame, text= 'Login',font = 'Bold,40' )
+login_spacer = Label(login_frame, text= '       ',font = 'Bold,40')
+login_spacer.pack(pady=40)
+
+login_label = Label(login_frame, text= 'Login',font = 'Bold,40')
 login_label.pack(pady=5)
 
 Label(login_frame, text="Username:").pack(pady=0)
@@ -232,9 +238,9 @@ Label(login_frame, text="Password:").pack(pady=0)
 password_entry = Entry(login_frame, show='*')
 password_entry.pack(pady=0)
 
-Button(login_frame, text="Login", command=lambda: login(username_entry.get(), password_entry.get())).pack(pady=10)
+ttk.Button(login_frame, text="Login", command=lambda: login(username_entry.get(), password_entry.get())).pack(pady=10)
 
-Button(login_frame, text="Register", command=open_registration_window).pack(pady=10)
+ttk.Button(login_frame, text="Register", command=open_registration_window).pack(pady=10)
 
 options_top = Frame(window, bg='Light grey')
 main_frame = Frame(window, bg='Light grey')
