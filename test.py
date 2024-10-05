@@ -272,4 +272,3 @@ show_login_window()
 
 update_time()
 window.mainloop()
-
