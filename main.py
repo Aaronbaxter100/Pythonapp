@@ -9,10 +9,8 @@ window.geometry('500x500')
 window.title('Testing')
 window.resizable(width=False, height=False)
 
-# Load existing user credentials from a file
 user_credentials = {}
 
-# Function to load user credentials from a file
 def load_user_credentials():
     if os.path.exists('user_credentials.txt'):
         with open('user_credentials.txt', 'r') as f:
@@ -20,7 +18,6 @@ def load_user_credentials():
                 username, password = line.strip().split(',')
                 user_credentials[username] = password
 
-# Function to save user credentials to a file
 def save_user_credentials():
     with open('user_credentials.txt', 'w') as f:
         for username, password in user_credentials.items():
@@ -62,16 +59,19 @@ def login(username, password):
 def open_registration_window():
     reg_window = Toplevel(window)
     reg_window.title('Register')
-    reg_window.geometry('300x300')
+    reg_window.geometry('250x250')
     reg_window.resizable(width=False, height=False)
 
-    Label(reg_window, text="Username:").pack(pady=5)
-    username_entry = Entry(reg_window)
-    username_entry.pack(pady=5)
+    register_label = Label(reg_window, text= 'Register',font = 'Bold,40' )
+    register_label.pack(pady=5)
 
-    Label(reg_window, text="Password:").pack(pady=5)
+    Label(reg_window, text="Username:").pack(pady=0)
+    username_entry = Entry(reg_window)
+    username_entry.pack(pady=0)
+
+    Label(reg_window, text="Password:").pack(pady=0)
     password_entry = Entry(reg_window, show='*')
-    password_entry.pack(pady=5)
+    password_entry.pack(pady=0)
 
     Button(reg_window, text="Register", command=lambda: register(username_entry.get(), password_entry.get(), reg_window)).pack(pady=10)
 
@@ -116,18 +116,22 @@ def task_page():
     lb.pack()
     task_frame.pack()
 
+    button_frame = Frame(settings_frame, bg='#abb2b9')
+    button_frame.pack(side='left', fill='y', padx=0, pady=0)
+
 def tbc_page():
     tbc_frame = Frame(main_frame, bg='Light grey')
-    tbc_button_frame = Frame(tbc_frame, bg='#abb2b9')
-    tbc_button_frame.pack(side='left', fill='y', padx=0, pady=0)
+    tbc_frame.pack(pady=20)
 
-    testing_button = Button(tbc_button_frame, text='Testing Button', font=('bold', 10))
-    testing_button.pack(pady=5)
+    button_frame = Frame(tbc_frame, bg='#abb2b9')
+    button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
     lb = Label(tbc_frame, text='TBC\n\nPage: 3', font=('Bold', 30), bg='Light grey')
-    lb.pack()
+    lb.pack(pady=10)
 
-    tbc_frame.pack(pady=20)
+
+    button1 = Button(button_frame, text='Button 1', font=('bold', 10))
+    button1.pack(pady=5)
 
 def settings_page():
     settings_frame = Frame(main_frame, bg='Light grey')
@@ -217,13 +221,16 @@ def help():
 login_frame = Frame(window)
 login_frame.pack(fill='both', expand=True)
 
-Label(login_frame, text="Username:").pack(pady=5)
-username_entry = Entry(login_frame)
-username_entry.pack(pady=5)
+login_label = Label(login_frame, text= 'Login',font = 'Bold,40' )
+login_label.pack(pady=5)
 
-Label(login_frame, text="Password:").pack(pady=5)
+Label(login_frame, text="Username:").pack(pady=0)
+username_entry = Entry(login_frame)
+username_entry.pack(pady=0)
+
+Label(login_frame, text="Password:").pack(pady=0)
 password_entry = Entry(login_frame, show='*')
-password_entry.pack(pady=5)
+password_entry.pack(pady=0)
 
 Button(login_frame, text="Login", command=lambda: login(username_entry.get(), password_entry.get())).pack(pady=10)
 
@@ -266,7 +273,7 @@ Settings_button.place(x=375, y=20, width=125)
 Settings_indicate = Label(options_top, text="", bg='Light grey')
 Settings_indicate.place(x=420, y=50, width=35, height=5)
 
-# Load existing user credentials when the application starts
+
 load_user_credentials()
 show_login_window()
 
