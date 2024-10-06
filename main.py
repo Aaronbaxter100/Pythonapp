@@ -1,8 +1,12 @@
+import tkinter
 from tkinter import *
 from tkinter import ttk
 from tkinter import Toplevel, Text, END, messagebox
 import time
 import os
+import speedtest
+
+from test import show_login_window
 
 window = Tk()
 window.geometry('500x500')
@@ -15,13 +19,16 @@ def load_user_credentials():
     if os.path.exists('user_credentials.txt'):
         with open('user_credentials.txt', 'r') as f:
             for line in f:
-                username, password = line.strip().split(',')
-                user_credentials[username] = password
+                email, password = line.strip().split(',')
+                user_credentials[email] = password
 
 def save_user_credentials():
     with open('user_credentials.txt', 'w') as f:
-        for username, password in user_credentials.items():
-            f.write(f"{username},{password}\n")
+        for email, password in user_credentials.items():
+            f.write(f"{email},{password}\n")
+
+def is_valid_email(email):
+    return re.match(r"[^@]+@[^@]+\.[^@]+", email)
 
 def apply_theme(theme):
     if theme == "Dark Mode":
@@ -45,16 +52,13 @@ def apply_theme(theme):
         time_label.config(bg='Light grey', fg='black')
         welcome_label.config(bg='Light grey', fg='black')
 
-def show_login_window():
-    login_frame.pack(fill='both', expand=True)
-
-def login(username, password):
-    if username in user_credentials and user_credentials[username] == password:
+def login(email, password):
+    if email in user_credentials and user_credentials[email] == password:
         messagebox.showinfo("Login Success", "Welcome!")
         login_frame.pack_forget()  # Hide login frame
         load_main_application()  # Load main application on successful login
     else:
-        messagebox.showerror("Login Error", "Invalid username or password")
+        messagebox.showerror("Login Error", "Invalid email or password")
 
 def open_registration_window():
     reg_window = Toplevel(window)
@@ -62,18 +66,31 @@ def open_registration_window():
     reg_window.geometry('250x250')
     reg_window.resizable(width=False, height=False)
 
-    register_label = Label(reg_window, text= 'Register',font = 'Bold,40' )
+    register_label = Label(reg_window, text='Register', font='Bold,40')
     register_label.pack(pady=5)
 
-    Label(reg_window, text="Username:").pack(pady=0)
-    username_entry = Entry(reg_window)
-    username_entry.pack(pady=0)
+    Label(reg_window, text="Email:").pack(pady=0)
+    email_entry = Entry(reg_window)
+    email_entry.pack(pady=0)
 
     Label(reg_window, text="Password:").pack(pady=0)
     password_entry = Entry(reg_window, show='*')
     password_entry.pack(pady=0)
 
-    Button(reg_window, text="Register", command=lambda: register(username_entry.get(), password_entry.get(), reg_window)).pack(pady=10)
+    Button(reg_window, text="Register", command=lambda: register(email_entry.get(), password_entry.get(), reg_window)).pack(pady=10)
+
+def register(email, password, reg_window):
+    if not is_valid_email(email):
+        messagebox.showerror("Registration Error", "Invalid email format!")
+    elif email in user_credentials:
+        messagebox.showerror("Registration Error", "Email already exists!")
+    elif email == "" or password == "":
+        messagebox.showerror("Registration Error", "Email and password cannot be empty!")
+    else:
+        user_credentials[email] = password
+        save_user_credentials()  # Save to file when registering
+        messagebox.showinfo("Registration Success", "User registered successfully!")
+        reg_window.destroy()
 
 def register(username, password, reg_window):
     if username in user_credentials:
@@ -100,21 +117,23 @@ def load_main_application():
 
 def home_page():
     home_frame = Frame(main_frame)
-    home_frame.pack(pady=20, anchor='w')
+    home_frame.pack(fill='both', expand=True)
 
     button_frame = Frame(home_frame, bg='#abb2b9')
     button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
     test1 = ttk.Button(button_frame, text='Testing One')
-    test1.pack()
+    test1.pack(pady=5)
 
     test2 = ttk.Button(button_frame, text='Testing Two',)
-    test2.pack()
-
-    home_frame.pack(pady=20)
+    test2.pack(pady=5)
 
 def task_page():
     task_frame = Frame(main_frame, bg='Light grey')
+
+    button_frame = Frame(task_frame, bg='#abb2b9')
+    button_frame.pack(side='left', fill='y', padx=0, pady=0)
+
     lb = Label(task_frame, text='Task page\n\nPage: 2', font=('Bold', 30), bg='Light grey')
     lb.pack()
     task_frame.pack()
@@ -124,7 +143,7 @@ def task_page():
 
 def tbc_page():
     tbc_frame = Frame(main_frame, bg='Light grey')
-    tbc_frame.pack(pady=20)
+    tbc_frame.pack(fill='both', expand=True)
 
     button_frame = Frame(tbc_frame, bg='#abb2b9')
     button_frame.pack(side='left', fill='y', padx=0, pady=0)
@@ -224,6 +243,7 @@ def help():
 login_frame = Frame(window)
 login_frame.pack(fill='both', expand=True)
 
+
 login_spacer = Label(login_frame, text= '       ',font = 'Bold,40')
 login_spacer.pack(pady=40)
 
@@ -242,6 +262,8 @@ ttk.Button(login_frame, text="Login", command=lambda: login(username_entry.get()
 
 ttk.Button(login_frame, text="Register", command=open_registration_window).pack(pady=10)
 
+
+# Inside the options frame
 options_top = Frame(window, bg='Light grey')
 main_frame = Frame(window, bg='Light grey')
 
@@ -282,7 +304,5 @@ Settings_indicate.place(x=420, y=50, width=35, height=5)
 
 load_user_credentials()
 show_login_window()
-
 update_time()
 window.mainloop()
-
