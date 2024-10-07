@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import Toplevel, Text, END, messagebox
 import time
 import os
+import re
 
 #from PyQt5.QtCore.QByteArray import remove
 
@@ -130,8 +131,28 @@ def home_page():
     lb = Label(home_frame, text='Home Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='Light grey')
     lb.pack()
 
-def task_page():
 
+def task_page():
+    def add_task():
+        task = task_entry.get()
+        if task:
+            task_frame = Frame(tasks_container, bg='Light grey')
+            task_frame.pack(fill='x', padx=10, pady=2)
+
+            task_state = IntVar()
+
+            task_checkbox = Checkbutton(task_frame, variable=task_state, text=task, bg='Light grey')
+            task_checkbox.pack(side='left', padx=5)
+
+            task_states[task] = (task_state, task_frame)
+
+            task_entry.delete(0, END)
+
+    def remove_task():
+        for task, (state, task_frame) in list(task_states.items()):
+            if state.get() == 1:
+                task_frame.destroy()
+                task_states.pop(task)
 
     # Frames
     task_frame = Frame(main_frame, bg='Light grey')
@@ -140,16 +161,25 @@ def task_page():
     button_frame = Frame(task_frame, bg='#abb2b9')
     button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
-    # Labels
-    lb = Label(task_frame, text='Task page\n\nPage: 2', font=('Bold', 30), bg='Light grey')
-    lb.pack()
+    # Entry to input new task
+    task_entry = Entry(task_frame)
+    task_entry.pack(pady=5)
 
     # Buttons
-    new_task = ttk.Button(button_frame, text='Add new task')
-    new_task.pack(pady=5)
+    new_task_button = ttk.Button(button_frame, text='Add new task', command=add_task)
+    new_task_button.pack(pady=5)
 
-    remove_task = ttk.Button(button_frame, text='Remove task')
-    remove_task.pack(pady=5)
+    remove_task_button = ttk.Button(button_frame, text='Remove task', command=remove_task)
+    remove_task_button.pack(pady=5)
+
+    # Container to display tasks with checkboxes
+    global tasks_container  # Declare as global to access it in add_task
+    tasks_container = Frame(task_frame, bg='Light grey')
+    tasks_container.pack(fill='both', pady=10)
+
+    # Dictionary to store both checkbox state and task frame
+    task_states = {}
+
 
 def tbc_page():
     tbc_frame = Frame(main_frame, bg='Light grey')
@@ -314,8 +344,6 @@ Settings_button.place(x=375, y=20, width=125)
 Settings_indicate = Label(options_top, text="", bg='Light grey')
 Settings_indicate.place(x=420, y=50, width=35, height=5)
 
-
 load_user_credentials()
-#show_login_window()
 update_time()
 window.mainloop()
