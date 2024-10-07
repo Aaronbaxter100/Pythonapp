@@ -1,9 +1,10 @@
-import tkinter
 from tkinter import *
 from tkinter import ttk
 from tkinter import Toplevel, Text, END, messagebox
 import time
 import os
+
+#from PyQt5.QtCore.QByteArray import remove
 
 window = Tk()
 window.geometry('500x500')
@@ -130,17 +131,25 @@ def home_page():
     lb.pack()
 
 def task_page():
+
+
+    # Frames
     task_frame = Frame(main_frame, bg='Light grey')
     task_frame.pack(fill='both', expand=True)
 
     button_frame = Frame(task_frame, bg='#abb2b9')
     button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
-    button1 = ttk.Button(button_frame, text='Button 1')
-    button1.pack(pady=5)
-
+    # Labels
     lb = Label(task_frame, text='Task page\n\nPage: 2', font=('Bold', 30), bg='Light grey')
     lb.pack()
+
+    # Buttons
+    new_task = ttk.Button(button_frame, text='Add new task')
+    new_task.pack(pady=5)
+
+    remove_task = ttk.Button(button_frame, text='Remove task')
+    remove_task.pack(pady=5)
 
 def tbc_page():
     tbc_frame = Frame(main_frame, bg='Light grey')
@@ -152,7 +161,7 @@ def tbc_page():
     lb = Label(tbc_frame, text='TBC\n\nPage: 3', font=('Bold', 30), bg='Light grey')
     lb.pack(pady=10)
 
-    button1 = ttk.Button(button_frame, text='Button 1' )
+    button1 = ttk.Button(button_frame, text='Button 1')
     button1.pack(pady=5)
 
 def settings_page():
@@ -260,7 +269,7 @@ password_entry.pack(pady=0)
 
 #show_password_var = IntVar()  # Integer variable to track checkbox state
 #show_password_checkbox = Checkbutton(login_frame, text="Show Password", variable=show_password_var, command=toggle_password)
-#show_password_checkbox.pack(pady =5)
+#show_password_checkbox.pack(pady=5)
 
 ttk.Button(login_frame, text="Login", command=lambda: login(username_entry.get(), password_entry.get())).pack(pady=10)
 

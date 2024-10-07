@@ -1,12 +1,9 @@
-import tkinter
 from tkinter import *
 from tkinter import ttk
 from tkinter import Toplevel, Text, END, messagebox
 import time
 import os
-import speedtest
-
-from test import show_login_window
+import re
 
 window = Tk()
 window.geometry('500x500')
@@ -52,11 +49,12 @@ def apply_theme(theme):
         time_label.config(bg='Light grey', fg='black')
         welcome_label.config(bg='Light grey', fg='black')
 
+
 def login(email, password):
     if email in user_credentials and user_credentials[email] == password:
         messagebox.showinfo("Login Success", "Welcome!")
-        login_frame.pack_forget()  # Hide login frame
-        load_main_application()  # Load main application on successful login
+        login_frame.pack_forget()
+        load_main_application()
     else:
         messagebox.showerror("Login Error", "Invalid email or password")
 
@@ -88,7 +86,7 @@ def register(email, password, reg_window):
         messagebox.showerror("Registration Error", "Email and password cannot be empty!")
     else:
         user_credentials[email] = password
-        save_user_credentials()  # Save to file when registering
+        save_user_credentials()
         messagebox.showinfo("Registration Success", "User registered successfully!")
         reg_window.destroy()
 
@@ -117,15 +115,65 @@ def home_page():
     test2 = ttk.Button(button_frame, text='Testing Two',)
     test2.pack(pady=5)
 
+    lb = Label(home_frame, text='Home Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='Light grey')
+    lb.pack()
+
 def task_page():
+    # Function to add a new task
+    def add_task():
+        task = task_entry.get()  # Get the task from entry field
+        if task:
+            task_listbox.insert(END, task)
+            task_states[task] = IntVar()  # Add a checkbox state (unchecked by default)
+            task_entry.delete(0, END)  # Clear entry field
+
+    # Function to remove selected task
+    def remove_task():
+        selected_tasks = task_listbox.curselection()
+        for task_index in reversed(selected_tasks):  # Remove from bottom to avoid reindexing issues
+            task = task_listbox.get(task_index)
+            task_listbox.delete(task_index)
+            task_states.pop(task, None)  # Remove state tracking for the task
+
+    # Function to handle checkbox and move task
+    def toggle_task():
+        for i in range(task_listbox.size()):
+            task = task_listbox.get(i)
+            if task_states[task].get() == 1:  # Checked
+                task_listbox.delete(i)
+                task_listbox.insert(END, task)  # Move to the bottom
+                task_states[task].set(0)  # Uncheck after moving
+
+    # Main task frame
     task_frame = Frame(main_frame, bg='Light grey')
+    task_frame.pack(fill='both', expand=True)
 
     button_frame = Frame(task_frame, bg='#abb2b9')
     button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
     lb = Label(task_frame, text='Task page\n\nPage: 2', font=('Bold', 30), bg='Light grey')
     lb.pack()
-    task_frame.pack()
+
+    # Entry to input new task
+    task_entry = Entry(task_frame)
+    task_entry.pack(pady=5)
+
+    # Buttons
+    new_task = ttk.Button(button_frame, text='Add new task', command=add_task)
+    new_task.pack(pady=5)
+
+    remove_task = ttk.Button(button_frame, text='Remove task', command=remove_task)
+    remove_task.pack(pady=5)
+
+    # Listbox to display tasks
+    task_listbox = Listbox(task_frame, selectmode=MULTIPLE, height=10, width=40)
+    task_listbox.pack(pady=10)
+
+    # Checkbox states for each task
+    task_states = {}
+
+    # Periodic check for toggled tasks
+    task_frame.after(1000, toggle_task)
 
 def tbc_page():
     tbc_frame = Frame(main_frame, bg='Light grey')
@@ -137,9 +185,38 @@ def tbc_page():
     lb = Label(tbc_frame, text='TBC\n\nPage: 3', font=('Bold', 30), bg='Light grey')
     lb.pack(pady=10)
 
+    button1 = ttk.Button(button_frame, text='Button 1')
+    button1.pack(pady=5)
+
 def settings_page():
     settings_frame = Frame(main_frame, bg='Light grey')
     settings_frame.pack(fill='both', expand=True)
+
+    button_frame = Frame(settings_frame, bg='#abb2b9')
+    button_frame.pack(side='left', fill='y', padx=0, pady=0)
+
+    button1 = ttk.Button(button_frame, text='Button 1')
+    button1.pack(pady=5)
+
+    button2 = ttk.Button(button_frame, text='Button 2')
+    button2.pack(pady=5)
+
+    help_button = ttk.Button(button_frame, text='    Help    ', command=help)
+    help_button.pack(pady=5)
+
+    theme_options = ['Light Mode', 'Dark Mode']
+    theme_dropdown = ttk.Combobox(button_frame, values=theme_options, state='readonly', width=12)
+    theme_dropdown.set('Light Mode')
+    theme_dropdown.pack(pady=10)
+
+    lb = Label(settings_frame, text='Settings Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='Light grey')
+    lb.pack(pady=10)
+
+    def on_theme_change():
+        selected_theme = theme_dropdown.get()
+        apply_theme(selected_theme)
+
+    theme_dropdown.bind('<<ComboboxSelected>>', on_theme_change)
 
 def hide_indicators():
     Home_indicate.config(bg='Light grey')
@@ -153,71 +230,67 @@ def delete_pages():
 
 def indicate(lb, page):
     hide_indicators()
-    lb.config(bg='Blue')
+    lb.config(bg='#0097e8')
     delete_pages()
     page()
 
 def update_time():
-    current_time = time.strftime('%H:%M:%S')
+    current_time = time.strftime("%H:%M:%S")
     time_label.config(text=current_time)
     window.after(1000, update_time)
 
-# Toggle password visibility function
-def toggle_password():
-    if show_password_var.get():
-        password_entry.config(show='')  # Show the password
-    else:
-        password_entry.config(show='*')  # Hide the password (use *)
+# Indicator bar
+options_top = Frame(window)
+time_label = Label(options_top, text="Time", font="Arial,18")
+time_label.place(x=10, y=0)
 
-# Frame
+Home_button = Button(options_top, text='Home', font=('Arial Bold', 15), bd=0, bg='Light grey', fg='#0097e8', command=lambda: indicate(Home_indicate, home_page))
+Home_button.place(x=20, y=40)
+
+Home_indicate = Label(options_top, text='', bg='Light grey')
+Home_indicate.place(x=25, y=72, width=55, height=5)
+
+Tasks_button = Button(options_top, text='Tasks', font=('Arial Bold', 15), bd=0, bg='Light grey', fg='#0097e8', command=lambda: indicate(Tasks_indicate, task_page))
+Tasks_button.place(x=100, y=40)
+
+Tasks_indicate = Label(options_top, text='', bg='Light grey')
+Tasks_indicate.place(x=100, y=72, width=55, height=5)
+
+TBC_button = Button(options_top, text='TBC', font=('Arial Bold', 15), bd=0, bg='Light grey', fg='#0097e8', command=lambda: indicate(TBC_indicate, tbc_page))
+TBC_button.place(x=180, y=40)
+
+TBC_indicate = Label(options_top, text='', bg='Light grey')
+TBC_indicate.place(x=180, y=72, width=55, height=5)
+
+Settings_button = Button(options_top, text='Settings', font=('Arial Bold', 15), bd=0, bg='Light grey', fg='#0097e8', command=lambda: indicate(Settings_indicate, settings_page))
+Settings_button.place(x=250, y=40)
+
+Settings_indicate = Label(options_top, text='', bg='Light grey')
+Settings_indicate.place(x=250, y=72, width=55, height=5)
+
+# Main content area
+main_frame = Frame(window)
+
+# Login frame
 login_frame = Frame(window)
-login_frame.pack(fill='both', expand=True)
+login_frame.pack(pady=10)
 
-login_spacer = Label(login_frame, text= '       ',font = 'Bold,40')
-login_spacer.pack(pady=40)
-
-login_label = Label(login_frame, text= 'Login',font = 'Bold,40')
+login_label = Label(login_frame, text='Login', font='Bold,40')
 login_label.pack(pady=5)
 
-Label(login_frame, text="Username:").pack(pady=0)
-username_entry = Entry(login_frame)
-username_entry.pack(pady=0)
+Label(login_frame, text="Email:").pack(pady=0)
+email_entry = Entry(login_frame)
+email_entry.pack(pady=0)
 
 Label(login_frame, text="Password:").pack(pady=0)
 password_entry = Entry(login_frame, show='*')
 password_entry.pack(pady=0)
 
-# Show Password checkbox
-show_password_var = IntVar()  # Integer variable to track checkbox state
-show_password_checkbox = Checkbutton(login_frame, text="Show Password", variable=show_password_var, command=toggle_password)
-show_password_checkbox.pack(pady=5)
+Button(login_frame, text="Login", command=lambda: login(email_entry.get(), password_entry.get())).pack(pady=10)
 
-ttk.Button(login_frame, text="Login", command=lambda: login(username_entry.get(), password_entry.get())).pack(pady=10)
-ttk.Button(login_frame, text="Register", command=open_registration_window).pack(pady=10)
+Button(login_frame, text="Register", command=open_registration_window).pack()
 
-options_top = Frame(window, bg='Light grey')
-main_frame = Frame(window, bg='Light grey')
-
-welcome_label = Label(options_top, text="Welcome", font=('Bold', 12), fg='Black', bg='Light grey')
-welcome_label.place(x=200, y=0)
-
-time_label = Label(options_top, text="", font=('Bold', 7), fg='Black', bg='Light grey')
-time_label.place(x=420, y=0)
-
-Home_button = Button(options_top, text='Home', font=('Arial', 13), bd=0, fg='#0097e8', bg='Light grey',
-                     activeforeground='Light grey', command=lambda: indicate(Home_indicate, home_page))
-Home_button.place(x=0, y=20, width=125)
-
-Home_indicate = Label(options_top, text="", bg='#abb2b9')
-Home_indicate.place(x=45, y=50, width=35, height=5)
-
-Tasks_button = Button(options_top, text='Tasks', font=('Arial', 13), bd=0, fg='#0097e8', bg='Light grey',
-                      activeforeground='Light grey', command=lambda: indicate(Tasks_indicate, task_page))
-Tasks_button.place(x=125, y=20, width=125)
-
-Tasks_indicate = Label(options_top, text="", bg='Light grey')
-Tasks_indicate.place(x=170, y=50, width=35, height=5)
-
+# Load user credentials on app start
 load_user_credentials()
-update_time()
+
 window.mainloop()
