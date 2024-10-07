@@ -4,9 +4,6 @@ from tkinter import ttk
 from tkinter import Toplevel, Text, END, messagebox
 import time
 import os
-import speedtest
-
-from test import show_login_window
 
 window = Tk()
 window.geometry('500x500')
@@ -52,11 +49,12 @@ def apply_theme(theme):
         time_label.config(bg='Light grey', fg='black')
         welcome_label.config(bg='Light grey', fg='black')
 
+
 def login(email, password):
     if email in user_credentials and user_credentials[email] == password:
         messagebox.showinfo("Login Success", "Welcome!")
-        login_frame.pack_forget()  # Hide login frame
-        load_main_application()  # Load main application on successful login
+        login_frame.pack_forget()
+        load_main_application()
     else:
         messagebox.showerror("Login Error", "Invalid email or password")
 
@@ -88,7 +86,7 @@ def register(email, password, reg_window):
         messagebox.showerror("Registration Error", "Email and password cannot be empty!")
     else:
         user_credentials[email] = password
-        save_user_credentials()  # Save to file when registering
+        save_user_credentials()
         messagebox.showinfo("Registration Success", "User registered successfully!")
         reg_window.destroy()
 
@@ -99,9 +97,9 @@ def register(username, password, reg_window):
         messagebox.showerror("Registration Error", "Username and password cannot be empty!")
     else:
         user_credentials[username] = password
-        save_user_credentials()  # Save to file when registering
+        save_user_credentials()
         messagebox.showinfo("Registration Success", "User registered successfully!")
-        reg_window.destroy()  # Close the registration window after successful registration
+        reg_window.destroy()
 
 def load_main_application():
     options_top.pack(pady=5)
@@ -128,18 +126,21 @@ def home_page():
     test2 = ttk.Button(button_frame, text='Testing Two',)
     test2.pack(pady=5)
 
+    lb = Label(home_frame, text='Home Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='Light grey')
+    lb.pack()
+
 def task_page():
     task_frame = Frame(main_frame, bg='Light grey')
+    task_frame.pack(fill='both', expand=True)
 
     button_frame = Frame(task_frame, bg='#abb2b9')
     button_frame.pack(side='left', fill='y', padx=0, pady=0)
+
+    button1 = ttk.Button(button_frame, text='Button 1')
+    button1.pack(pady=5)
 
     lb = Label(task_frame, text='Task page\n\nPage: 2', font=('Bold', 30), bg='Light grey')
     lb.pack()
-    task_frame.pack()
-
-    button_frame = Frame(task_frame, bg='#abb2b9')
-    button_frame.pack(side='left', fill='y', padx=0, pady=0)
 
 def tbc_page():
     tbc_frame = Frame(main_frame, bg='Light grey')
@@ -178,7 +179,7 @@ def settings_page():
     lb = Label(settings_frame, text='Settings Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='Light grey')
     lb.pack(pady=10)
 
-    def on_theme_change(event):
+    def on_theme_change():
         selected_theme = theme_dropdown.get()
         apply_theme(selected_theme)
 
@@ -220,7 +221,7 @@ def help():
     message_text = Text(help_window, font=('Arial', 12), height=5, width=40)
     message_text.pack(pady=10)
 
-    def limit_chars(event=None):
+    def limit_chars():
         current_text = message_text.get("1.0", END)
         if len(current_text) > 200:
             message_text.delete("1.0", END)
@@ -243,7 +244,6 @@ def help():
 login_frame = Frame(window)
 login_frame.pack(fill='both', expand=True)
 
-
 login_spacer = Label(login_frame, text= '       ',font = 'Bold,40')
 login_spacer.pack(pady=40)
 
@@ -258,6 +258,10 @@ Label(login_frame, text="Password:").pack(pady=0)
 password_entry = Entry(login_frame, show='*')
 password_entry.pack(pady=0)
 
+#show_password_var = IntVar()  # Integer variable to track checkbox state
+#show_password_checkbox = Checkbutton(login_frame, text="Show Password", variable=show_password_var, command=toggle_password)
+#show_password_checkbox.pack(pady =5)
+
 ttk.Button(login_frame, text="Login", command=lambda: login(username_entry.get(), password_entry.get())).pack(pady=10)
 
 ttk.Button(login_frame, text="Register", command=open_registration_window).pack(pady=10)
@@ -268,7 +272,7 @@ options_top = Frame(window, bg='Light grey')
 main_frame = Frame(window, bg='Light grey')
 
 welcome_label = Label(options_top, text="Welcome", font=('Bold', 12), fg='Black', bg='Light grey')
-welcome_label.place(x=200, y=0)
+welcome_label.place(x=220, y=0)
 
 time_label = Label(options_top, text="", font=('Bold', 7), fg='Black', bg='Light grey')
 time_label.place(x=420, y=0)
@@ -303,6 +307,6 @@ Settings_indicate.place(x=420, y=50, width=35, height=5)
 
 
 load_user_credentials()
-show_login_window()
+#show_login_window()
 update_time()
 window.mainloop()

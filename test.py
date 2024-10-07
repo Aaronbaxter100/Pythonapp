@@ -4,7 +4,9 @@ from tkinter import ttk
 from tkinter import Toplevel, Text, END, messagebox
 import time
 import os
-import re  # For email validation
+import speedtest
+
+from test import show_login_window
 
 window = Tk()
 window.geometry('500x500')
@@ -26,7 +28,6 @@ def save_user_credentials():
             f.write(f"{email},{password}\n")
 
 def is_valid_email(email):
-    # Simple email validation
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
 
 def apply_theme(theme):
@@ -50,9 +51,6 @@ def apply_theme(theme):
         Settings_button.config(bg='Light grey', fg='#0097e8')
         time_label.config(bg='Light grey', fg='black')
         welcome_label.config(bg='Light grey', fg='black')
-
-def show_login_window():
-    login_frame.pack(fill='both', expand=True)
 
 def login(email, password):
     if email in user_credentials and user_credentials[email] == password:
@@ -92,7 +90,7 @@ def register(email, password, reg_window):
         user_credentials[email] = password
         save_user_credentials()  # Save to file when registering
         messagebox.showinfo("Registration Success", "User registered successfully!")
-        reg_window.destroy()  # Close the registration window after successful registration
+        reg_window.destroy()
 
 def load_main_application():
     options_top.pack(pady=5)
@@ -133,15 +131,15 @@ def tbc_page():
     tbc_frame = Frame(main_frame, bg='Light grey')
     tbc_frame.pack(fill='both', expand=True)
 
+    button_frame = Frame(tbc_frame, bg='#abb2b9')
+    button_frame.pack(side='left', fill='y', padx=0, pady=0)
+
     lb = Label(tbc_frame, text='TBC\n\nPage: 3', font=('Bold', 30), bg='Light grey')
     lb.pack(pady=10)
 
 def settings_page():
     settings_frame = Frame(main_frame, bg='Light grey')
     settings_frame.pack(fill='both', expand=True)
-
-    lb = Label(settings_frame, text='Settings Page\n\nPage: 4\n\n \n\n', font=('Bold', 30), bg='Light grey')
-    lb.pack(pady=10)
 
 def hide_indicators():
     Home_indicate.config(bg='Light grey')
@@ -164,30 +162,38 @@ def update_time():
     time_label.config(text=current_time)
     window.after(1000, update_time)
 
+# Toggle password visibility function
+def toggle_password():
+    if show_password_var.get():
+        password_entry.config(show='')  # Show the password
+    else:
+        password_entry.config(show='*')  # Hide the password (use *)
+
 # Frame
 login_frame = Frame(window)
 login_frame.pack(fill='both', expand=True)
 
-login_spacer = Label(login_frame, text='       ', font='Bold,40')
+login_spacer = Label(login_frame, text= '       ',font = 'Bold,40')
 login_spacer.pack(pady=40)
 
-login_label = Label(login_frame, text='Login', font='Bold,40')
+login_label = Label(login_frame, text= 'Login',font = 'Bold,40')
 login_label.pack(pady=5)
 
-Label(login_frame, text="Email:").pack(pady=0)
-email_entry = Entry(login_frame)
-email_entry.pack(pady=0)
+Label(login_frame, text="Username:").pack(pady=0)
+username_entry = Entry(login_frame)
+username_entry.pack(pady=0)
 
 Label(login_frame, text="Password:").pack(pady=0)
 password_entry = Entry(login_frame, show='*')
 password_entry.pack(pady=0)
 
-ttk.Button(login_frame, text="Login", command=lambda: login(email_entry.get(), password_entry.get())).pack(pady=10)
+# Show Password checkbox
+show_password_var = IntVar()  # Integer variable to track checkbox state
+show_password_checkbox = Checkbutton(login_frame, text="Show Password", variable=show_password_var, command=toggle_password)
+show_password_checkbox.pack(pady=5)
 
+ttk.Button(login_frame, text="Login", command=lambda: login(username_entry.get(), password_entry.get())).pack(pady=10)
 ttk.Button(login_frame, text="Register", command=open_registration_window).pack(pady=10)
-
-
-# Inside the options frame
 
 options_top = Frame(window, bg='Light grey')
 main_frame = Frame(window, bg='Light grey')
@@ -212,22 +218,6 @@ Tasks_button.place(x=125, y=20, width=125)
 Tasks_indicate = Label(options_top, text="", bg='Light grey')
 Tasks_indicate.place(x=170, y=50, width=35, height=5)
 
-TBC_button = Button(options_top, text='TBC', font=('Arial', 13), bd=0, fg='#0097e8', bg='Light grey',
-                    activeforeground='Light grey', command=lambda: indicate(TBC_indicate, tbc_page))
-TBC_button.place(x=250, y=20, width=125)
-
-TBC_indicate = Label(options_top, text="", bg='Light grey')
-TBC_indicate.place(x=297, y=50, width=35, height=5)
-
-Settings_button = Button(options_top, text='Settings', font=('Arial', 13), bd=0, fg='#0097e8', bg='Light grey',
-                         activeforeground='Light grey', command=lambda: indicate(Settings_indicate, settings_page))
-Settings_button.place(x=375, y=20, width=125)
-
-Settings_indicate = Label(options_top, text="", bg='Light grey')
-Settings_indicate.place(x=420, y=50, width=35, height=5)
-
 load_user_credentials()
-show_login_window()
 update_time()
 window.mainloop()
-
