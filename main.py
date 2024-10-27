@@ -5,7 +5,7 @@ import time
 import os
 import re
 
-#from PyQt5.QtCore.QByteArray import remove
+# from PyQt5.QtCore.QByteArray import remove
 
 window = Tk()
 window.geometry('500x500')
@@ -77,7 +77,8 @@ def open_registration_window():
     password_entry = Entry(reg_window, show='*')
     password_entry.pack(pady=0)
 
-    Button(reg_window, text="Register", command=lambda: register(email_entry.get(), password_entry.get(), reg_window)).pack(pady=10)
+    Button(reg_window, text="Register", command=lambda: register(email_entry.get(), password_entry.get(),
+                                                                 reg_window)).pack(pady=10)
 
 def register(email, password, reg_window):
     if not is_valid_email(email):
@@ -222,7 +223,7 @@ def settings_page():
         selected_theme = theme_dropdown.get()
         apply_theme(selected_theme)
 
-    theme_dropdown.bind('<<ComboboxSelected>>', on_theme_change)
+    theme_dropdown.bind(' <<ComboboxSelected>> ', on_theme_change)
 
 def hide_indicators():
     Home_indicate.config(bg='Light grey')
@@ -283,10 +284,10 @@ def help():
 login_frame = Frame(window)
 login_frame.pack(fill='both', expand=True)
 
-login_spacer = Label(login_frame, text= '       ',font = 'Bold,40')
+login_spacer = Label(login_frame, text= '       ', font = 'Bold,40')
 login_spacer.pack(pady=40)
 
-login_label = Label(login_frame, text= 'Login',font = 'Bold,40')
+login_label = Label(login_frame, text= 'Login', font = 'Bold,40')
 login_label.pack(pady=5)
 
 Label(login_frame, text="Username:").pack(pady=0)
@@ -297,9 +298,10 @@ Label(login_frame, text="Password:").pack(pady=0)
 password_entry = Entry(login_frame, show='*')
 password_entry.pack(pady=0)
 
-#show_password_var = IntVar()  # Integer variable to track checkbox state
-#show_password_checkbox = Checkbutton(login_frame, text="Show Password", variable=show_password_var, command=toggle_password)
-#show_password_checkbox.pack(pady=5)
+# show_password_var = IntVar()  # Integer variable to track checkbox state
+# show_password_checkbox = Checkbutton(login_frame, text="Show Password",
+# variable=show_password_var, command=toggle_password)
+# show_password_checkbox.pack(pady=5)
 
 ttk.Button(login_frame, text="Login", command=lambda: login(username_entry.get(), password_entry.get())).pack(pady=10)
 
